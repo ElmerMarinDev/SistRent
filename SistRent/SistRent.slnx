@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="SistRent.Application/SistRent.Application.csproj" />
+  <Project Path="SistRent.Domain/SistRent.Domain.csproj" />
+  <Project Path="SistRent.Infrastructure/SistRent.Infrastructure.csproj" />
+</Solution>
