@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SistRent.Domain.Entities
 {
-    internal class RoomType
+    public class RoomType
     {
     }
 }

@@ -19,12 +19,14 @@ namespace SistRent.Domain.Entities
         public required string Dni { get; set; }
 
         [Required]
-        public required string Telefono { get; set; }
+        public required string Phone { get; set; }
 
         [Required]
         public required string Email { get; set; }
 
         public DateTimeOffset RegistrationDate { get; set; } = DateTimeOffset.UtcNow; 
         public bool Status { get; set; }
+
+        public virtual ICollection<Contract> Contract { get; set; } = new List<Contract>();
     }
 }
