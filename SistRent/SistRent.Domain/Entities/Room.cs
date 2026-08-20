@@ -17,6 +17,8 @@ namespace SistRent.Domain.Entities
         public decimal MonthyPrice { get; set; }
         public bool Status { get; set; }
         public string? Description { get; set; }
+
+        public string SourceImagen { get; set; } = string.Empty;
         public virtual ICollection<Contract> Contract { get; set; } = new List<Contract>();
     }
 }

@@ -24,6 +24,8 @@ namespace SistRent.Domain.Entities
         [Required]
         public required string Email { get; set; }
 
+        public string SourceImagen { get; set; } = string.Empty;
+
         public DateTimeOffset RegistrationDate { get; set; } = DateTimeOffset.UtcNow; 
         public bool Status { get; set; }
 
