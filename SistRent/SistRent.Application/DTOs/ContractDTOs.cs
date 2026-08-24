@@ -5,12 +5,44 @@ using System.Text;
 
 namespace SistRent.Application.DTOs
 {
-    public class ContractDTOs
-    {
-        public record contractDTO(int ContractId, string TenantName, string ContractDate);
-        public record PaymentDTO(string Email, string Password);
-        public record ChangePasswordUserDTO(int UserId, string NewPassword);
-        public record CreateUserDTO(string FullName, string Email, string Role, string Password);
-        public record UpdateUserDTO(int UserId, string FullName, string Email, string Role, bool ResetPassword);
-    }
+
+    public record ContractReadDTO(
+        int ContractId, 
+        RoomReadDTO Room, 
+        TenantReadDTO Tenant,
+        DateTime StartDate, 
+        DateTime EndDate,
+        decimal MonthyAmount, 
+        decimal SecuryDeposit,
+        string status, 
+        DateTime RegistrationDate, 
+        ICollection<ContractPaymentReadDTO> Payments
+        );
+
+    public record RoomReadDTO(
+        int IdRoom,
+        int IdProperty,
+        int IdRoomType,
+        decimal MonthyPrice,
+        string Description,
+        RoomTypeReadDTO RoomType
+    );
+
+    public record RoomTypeReadDTO(
+        int IdRoomType,
+        string Name,
+        string Description
+     );
+
+    public record TenantReadDTO(
+    int IdTenant,
+    string FirstName,
+    string LastName,
+    string Dni,
+    string Phone,
+    string Email,
+    bool status,
+    DateTime RegistrationDate
+ );
+
 }
