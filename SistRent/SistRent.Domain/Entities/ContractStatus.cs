@@ -5,17 +5,16 @@ using System.Text;
 
 namespace SistRent.Domain.Entities
 {
-
-    public class RoomType
+    public class ContractStatus
     {
-        public int IdRoomType { get; set; }
+        public int IdContractStatus { get; set; }
 
         [Required]
         public string Name { get; set; } = null!;
 
         public string? Description { get; set; }
 
-        public virtual ICollection<Room> Rooms { get; set; }
-            = new List<Room>();
+        public virtual ICollection<Contract> Contracts { get; set; }
+            = new List<Contract>();
     }
 }

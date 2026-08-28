@@ -6,43 +6,57 @@ using System.Text;
 namespace SistRent.Application.DTOs
 {
 
-    public record ContractReadDTO(
-        int ContractId, 
-        RoomReadDTO Room, 
-        TenantReadDTO Tenant,
-        DateTime StartDate, 
-        DateTime EndDate,
-        decimal MonthyAmount, 
-        decimal SecuryDeposit,
-        string status, 
-        DateTime RegistrationDate, 
-        ICollection<ContractPaymentReadDTO> Payments
-        );
-
-    public record RoomReadDTO(
-        int IdRoom,
-        int IdProperty,
-        int IdRoomType,
-        decimal MonthyPrice,
-        string Description,
-        RoomTypeReadDTO RoomType
+    public record ReadContractDto(
+        int ContractId,
+        int RoomId,
+        int TenantId,
+        DateTime StartDate,
+        DateTime? EndDate,
+        decimal MonthlyAmount,
+        decimal SecurityDeposit,
+        string Status,
+        DateTime RegistrationDate
     );
 
-    public record RoomTypeReadDTO(
-        int IdRoomType,
-        string Name,
-        string Description
-     );
+    public record CreateContractDto(
+        int RoomId,
+        int TenantId,
+        DateTime StartDate,
+        DateTime? EndDate,
+        decimal MonthlyAmount,
+        decimal SecurityDeposit
+    );
 
-    public record TenantReadDTO(
-    int IdTenant,
-    string FirstName,
-    string LastName,
-    string Dni,
-    string Phone,
-    string Email,
-    bool status,
-    DateTime RegistrationDate
- );
+    public record UpdateContractDto(
+        int RoomId,
+        int TenantId,
+        DateTime StartDate,
+        DateTime? EndDate,
+        decimal MonthlyAmount,
+        decimal SecurityDeposit,
+        string Status
+    );
+
+    public record ContractDetailDto(
+        int IdContrat,
+        int IdRoom,
+        int IdTenant,
+        DateTimeOffset StartDate,
+        DateTimeOffset EndDate,
+        decimal MonthlyAmount,
+        decimal SecurityDeposit,
+        bool Status,
+        DateTimeOffset RegistrationDate,
+        IEnumerable<PaymentReadDto> Payments
+    );
+    public record PaymentReadDto(
+        int PaymentId,
+        int ContractId,
+        decimal Amount,
+        string PaymentMethod,
+        DateTime PaymentDate,
+        string Status,
+        DateTime RegistrationDate
+    );
 
 }

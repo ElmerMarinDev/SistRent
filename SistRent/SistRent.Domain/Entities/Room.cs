@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
@@ -9,16 +10,28 @@ namespace SistRent.Domain.Entities
     {
         public int IdRoom { get; set; }
 
-        public string? Adress { get; set; }
+        public int IdProperty { get; set; }
 
-        public string? RoomNumber { get; set; }
+        public int IdRoomType { get; set; }
+
+        [Required]
+        public string RoomNumber { get; set; } = null!;
+
+        public string? Floor { get; set; }
 
         [Column(TypeName = "decimal(10,2)")]
-        public decimal MonthyPrice { get; set; }
-        public bool Status { get; set; }
+        public decimal MonthlyPrice { get; set; }
+
+        [Required]
+        public string Status { get; set; } = null!;
+
         public string? Description { get; set; }
 
-        public string SourceImagen { get; set; } = string.Empty;
-        public virtual ICollection<Contract> Contract { get; set; } = new List<Contract>();
+        public virtual Property Property { get; set; } = null!;
+
+        public virtual RoomType RoomType { get; set; } = null!;
+
+        public virtual ICollection<Contract> Contracts { get; set; }
+            = new List<Contract>();
     }
 }

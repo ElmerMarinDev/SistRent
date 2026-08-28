@@ -5,23 +5,33 @@ using System.Text;
 
 namespace SistRent.Domain.Entities
 {
+
     public class User
     {
-        public int UserId { get; set; }
+        public int IdUser { get; set; }
+
+        public int IdRole { get; set; }
 
         [Required]
-        public required string FullName { get;set; }
+        public string FullName { get; set; } = null!;
 
         [Required]
-        public required string Email { get; set; }
-        [Required]
-        public required string Password { get; set; }
+        public string Email { get; set; } = null!;
 
-        public bool ResetPassword { get; set; }
-        public string? Role { get; set; }
+        [Required]
+        public string PasswordHash { get; set; } = null!;
+
         public bool Status { get; set; }
-        public string SourceImagen { get; set; } = string.Empty;
 
-        public DateTimeOffset RegistrationDate { get; set; } = DateTimeOffset.UtcNow;
+        public bool MustChangePassword { get; set; }
+
+        public string? ImageSource { get; set; }
+
+        public DateTimeOffset RegistrationDate { get; set; }= DateTimeOffset.UtcNow;
+
+        public virtual Role Role { get; set; } = null!;
+
+        // Un User puede tener 0 o 1 Tenant
+        public virtual Tenant? Tenant { get; set; }
     }
 }

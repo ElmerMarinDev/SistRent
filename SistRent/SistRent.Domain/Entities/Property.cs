@@ -1,23 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace SistRent.Domain.Entities
 {
+
     public class Property
     {
         public int IdProperty { get; set; }
 
+        [Required]
+        public string Name { get; set; } = null!;
 
-        public string? Name { get; set; }
+        [Required]
+        public string Address { get; set; } = null!;
 
-        public string? Adress { get; set; }
+        public string? Description { get; set; }
 
         public bool Status { get; set; }
-        public DateTimeOffset RegistrationDate { get; set; } = DateTimeOffset.UtcNow;
+        public DateTimeOffset RegistrationDate { get; set; }= DateTimeOffset.UtcNow;
 
-        public virtual ICollection<Room> Room { get; set; } = new List<Room>();
-
+        public virtual ICollection<Room> Rooms { get; set; }
+            = new List<Room>();
     }
 }

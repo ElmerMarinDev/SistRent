@@ -5,17 +5,16 @@ using System.Text;
 
 namespace SistRent.Domain.Entities
 {
-
-    public class RoomType
+    public class PaymentMethod
     {
-        public int IdRoomType { get; set; }
+        public int IdPaymentMethod { get; set; }
 
         [Required]
         public string Name { get; set; } = null!;
 
         public string? Description { get; set; }
 
-        public virtual ICollection<Room> Rooms { get; set; }
-            = new List<Room>();
+        public virtual ICollection<Payment> Payments { get; set; }
+            = new List<Payment>();
     }
 }
