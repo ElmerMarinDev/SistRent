@@ -27,7 +27,7 @@ namespace SistRent.Domain.Entities
 
         public string? ImageSource { get; set; }
 
-        public DateTimeOffset RegistrationDate { get; set; }= DateTimeOffset.UtcNow;
+        public DateTimeOffset CreatedAt { get; set; }= DateTimeOffset.UtcNow;
 
         public virtual Role Role { get; set; } = null!;
 

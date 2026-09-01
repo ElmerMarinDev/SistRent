@@ -20,7 +20,7 @@ namespace SistRent.Domain.Entities
         public string? Description { get; set; }
 
         public bool Status { get; set; }
-        public DateTimeOffset RegistrationDate { get; set; }= DateTimeOffset.UtcNow;
+        public DateTimeOffset CreatedAt { get; set; }= DateTimeOffset.UtcNow;
 
         public virtual ICollection<Room> Rooms { get; set; }
             = new List<Room>();

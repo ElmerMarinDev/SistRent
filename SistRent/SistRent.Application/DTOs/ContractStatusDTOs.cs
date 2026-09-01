@@ -4,18 +4,18 @@ using System.Text;
 
 namespace SistRent.Application.DTOs
 {
-    public record RoomTypeCreateDto(
+    public record ContractStatusCreateDto(
         string Name,
         string? Description
     );
 
-    public record RoomTypeUpdateDto(
+    public record ContractStatusUpdateDto(
         string Name,
         string? Description
     );
 
-    public record RoomTypeResponseDto(
-        int IdRoomType,
+    public record ContractStatusResponseDto(
+        int IdContractStatus,
         string Name,
         string? Description
     );

@@ -4,19 +4,21 @@ using System.Text;
 
 namespace SistRent.Application.DTOs
 {
-    public record RoomTypeCreateDto(
+
+    public record RoleCreateDto(
         string Name,
         string? Description
     );
 
-    public record RoomTypeUpdateDto(
+    public record RoleUpdateDto(
         string Name,
         string? Description
     );
 
-    public record RoomTypeResponseDto(
-        int IdRoomType,
+    public record RoleResponseDto(
+        int IdRole,
         string Name,
-        string? Description
+        string? Description,
+        DateTimeOffset RegistrationDate
     );
 }
