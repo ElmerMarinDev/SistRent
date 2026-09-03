@@ -4,22 +4,6 @@ using System.Text;
 
 namespace SistRent.Application.DTOs
 {
-    public record UserCreateDto(
-        int IdRole,
-        string FullName,
-        string Email,
-        string Password,
-        bool Status,
-        string? ImageSource
-    );
-
-    public record UserUpdateDto(
-        int IdRole,
-        string FullName,
-        string Email,
-        bool Status,
-        string? ImageSource
-    );
 
     public record UserResponseDto(
         int IdUser,
@@ -38,8 +22,26 @@ namespace SistRent.Application.DTOs
     );
 
     public record ChangePasswordDto(
-        string CurrentPassword,
+        int UserId,
         string NewPassword
+);
+    public record UserCreateDto(
+        int IdRole,
+        string FullName,
+        string Email,
+        string Password,
+        bool Status,
+        string? ImageSource
+    );
+
+    public record UserUpdateDto(
+        int UserId,
+        int IdRole,
+        string FullName,
+        string Email,
+        bool Status,
+        string? ImageSource,
+        bool MustChangePassword
     );
 
     public record ResetPasswordDto(

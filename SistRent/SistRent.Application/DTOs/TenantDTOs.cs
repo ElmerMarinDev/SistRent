@@ -22,13 +22,24 @@ namespace SistRent.Application.DTOs
     public record TenantResponseDto(
         int IdTenant,
         int IdUser,
+        string Dni,
+        string? Phone,
+        string? EmergencyContact,
+        DateTimeOffset RegistrationDate,
+        bool Status
+    );
+
+    public record TenantDetailDto(
+        int IdTenant,
+        int IdUser,
         string FullName,
         string Email,
         string Dni,
         string? Phone,
         string? EmergencyContact,
         DateTimeOffset RegistrationDate,
-        bool Status
+        bool Status,
+        IReadOnlyCollection<ContractResponseDto> Contracts
     );
 }
 

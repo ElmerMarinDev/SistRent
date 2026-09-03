@@ -7,11 +7,11 @@ namespace SistRent.Application.Interfaces
 {
     public interface ITenantRepository
     {
-        Task<IEnumerable<Role>> GetAsync();
-        Task<Role?> GetByIdAsync();
-        Task<IEnumerable<Role>> GetByParameterAsync(string parameter);
-        Task AddAsync(Role Tenant);
-        Task EditAsync(Role Tenant);
-        Task DeleteAsync(Role Tenant);
+        Task<IEnumerable<Tenant>> GetAsync();
+        Task<Tenant?> GetByIdAsync();
+        Task<IEnumerable<Tenant>> GetByParameterAsync(string parameter);
+        Task AddAsync(Tenant Tenant);
+        Task EditAsync(int id);
+        Task DeleteAsync(int id);
     }
 }
