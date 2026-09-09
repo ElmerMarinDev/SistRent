@@ -67,7 +67,7 @@ namespace SistRent.Application.Services
 
         }
 
-        public async Task AddAsync(TenantCreateDto tenant, UserCreateDto user)
+        public async Task AddAsync(TenantCreateDto tenant)
         {
 
             if (string.IsNullOrEmpty(tenant.Dni)) throw new ValidationException("Full Name id is requeried");
@@ -76,17 +76,17 @@ namespace SistRent.Application.Services
 
             var newUser = new User
             {
-                FullName = user.FullName,
-                Email = user.Email,
-                IdRole = user.IdRole,
-                PasswordHash = user.Email
+                FullName = tenant.Fullname,
+                Email = tenant.Email,
+                IdRole = 2,
+                PasswordHash =tenant.Email
             };
 
-            await _user.AddAsync(newUser);
+           
 
             var newTenant = new Tenant
             {
-                IdUser =newUser.IdUser,
+                User =newUser,
                 Dni = tenant.Dni,
                 Phone =tenant.Phone,
                 EmergencyContact =tenant.EmergencyContact,
@@ -94,6 +94,32 @@ namespace SistRent.Application.Services
             };
 
             await _repo.AddAsync(newTenant);
+        }
+
+
+        public async Task UpdateAsync(TenantUpdateDto tenant)
+        {
+            if (tenant.TenantId == 0) throw new ValidationException("User id is requeried");
+            if (string.IsNullOrEmpty(tenant.Dni)) throw new ValidationException("Full Name id is requeried");
+            if (string.IsNullOrEmpty(tenant.Phone)) throw new ValidationException("Email id is requeried");
+
+            var existingTenant = await _repo.GetByIdAsync(tenant.TenantId);
+
+            if (existingTenant is null) throw new ValidationException("User not found");
+
+            if (existingTenant.Dni != user.FullName)
+                existingUser.FullName = user.FullName;
+
+            if (existingUser.Email != user.Email)
+                existingUser.Email = user.Email;
+
+            if (existingUser.IdRole != user.IdRole)
+                existingUser.IdRole = user.IdRole;
+
+            if (existingUser.MustChangePassword != user.MustChangePassword)
+                existingUser.MustChangePassword = user.MustChangePassword;
+
+            await _repo.EditAsync(existingUser);
         }
     }
 }

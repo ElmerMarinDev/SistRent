@@ -6,13 +6,15 @@ namespace SistRent.Application.DTOs
 {
 
     public record TenantCreateDto(
-        int IdUser,
         string Dni,
         string? Phone,
+        string?Email,
+        string?Fullname,
         string? EmergencyContact,
         bool Status
     );
     public record TenantUpdateDto(
+        int TenantId,
         string Dni,
         string? Phone,
         string? EmergencyContact,
