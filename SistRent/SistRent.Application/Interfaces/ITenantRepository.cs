@@ -11,7 +11,7 @@ namespace SistRent.Application.Interfaces
         Task<Tenant?> GetByIdAsync(int id);
         Task<IEnumerable<Tenant>> GetByParameterAsync(string parameter);
         Task AddAsync(Tenant Tenant);
-        Task EditAsync(int id);
+        Task EditAsync(Tenant Tenant);
         Task DeleteAsync(int id);
     }
 }

@@ -9,7 +9,7 @@ using System.Text;
 
 namespace SistRent.Application.Services
 {
-    public class TenantService(ITenantRepository _repo,IUserRepository _user)
+    public class TenantService(ITenantRepository _repo,IUserRepository _user,IFileStorageService _fileStorageService)
     {
         public async Task<IEnumerable<TenantResponseDto>> GetAsync()
         {
@@ -17,8 +17,10 @@ namespace SistRent.Application.Services
 
             return tenants.Select(e => new TenantResponseDto(
                 IdTenant: e.IdTenant,
-                IdUser: e.IdUser,
+                ImageSource:e.User.ImageSource,
+                fullname:e.User.FullName,
                 Status: e.Status,
+                Email:e.User.Email,
                 Dni:e.Dni,
                 Phone:e.Phone,
                 RegistrationDate:e.RegistrationDate,
@@ -38,7 +40,6 @@ namespace SistRent.Application.Services
 
             return new TenantResponseDto(
                 IdTenant: tenant.IdTenant,
-                IdUser: tenant.IdUser,
                 Status: tenant.Status,
                 Dni: tenant.Dni,
                 Phone: tenant.Phone,
@@ -107,19 +108,40 @@ namespace SistRent.Application.Services
 
             if (existingTenant is null) throw new ValidationException("User not found");
 
-            if (existingTenant.Dni != user.FullName)
-                existingUser.FullName = user.FullName;
+            var UserID = existingTenant.IdUser;
+            var existingUser = await _user.GetByIdAsync(UserID);
 
-            if (existingUser.Email != user.Email)
-                existingUser.Email = user.Email;
+            if(existingUser.ImageSource!=null && !string.IsNullOrEmpty(existingUser.ImageSource))
+            {
+                var SourceImagen = "";
+                SourceImagen = await _fileStorageService.SaveImageAsync(tenant.ImageStream, tenant.ImageFileName);            
+                
+                if (!string.IsNullOrEmpty(existingUser.ImageSource))
+                {
+                
+                await _fileStorageService.DeletemageAsync(existingUser.ImageSource);
+                }
 
-            if (existingUser.IdRole != user.IdRole)
-                existingUser.IdRole = user.IdRole;
+                existingUser.ImageSource= SourceImagen;
+            }
 
-            if (existingUser.MustChangePassword != user.MustChangePassword)
-                existingUser.MustChangePassword = user.MustChangePassword;
+            await _user.EditAsync(existingUser);
 
-            await _repo.EditAsync(existingUser);
+
+
+            if (existingTenant.Dni != tenant.Dni)
+                existingTenant.Dni = tenant.Dni;
+
+            if (existingTenant.Phone != tenant.Phone)
+                existingTenant.Phone = tenant.Phone;
+
+            if (existingTenant.EmergencyContact != tenant.EmergencyContact)
+                existingTenant.EmergencyContact = tenant.EmergencyContact;
+
+            if (existingTenant.Status != tenant.Status)
+                existingTenant.Status = tenant.Status;
+
+            await _repo.EditAsync(existingTenant);
         }
     }
 }

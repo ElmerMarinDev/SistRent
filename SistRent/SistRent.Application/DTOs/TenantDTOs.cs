@@ -18,12 +18,16 @@ namespace SistRent.Application.DTOs
         string Dni,
         string? Phone,
         string? EmergencyContact,
+        Stream?ImageStream,
+        string?ImageFileName,
         bool Status
     );
 
     public record TenantResponseDto(
         int IdTenant,
-        int IdUser,
+        string fullname,
+        string Email,
+        string? ImageSource,
         string Dni,
         string? Phone,
         string? EmergencyContact,
