@@ -15,8 +15,11 @@ namespace SistRent.Application.DTOs
     );
     public record TenantUpdateDto(
         int TenantId,
+        string fullname,
+        string Email,
         string Dni,
         string? Phone,
+        string Password,
         string? EmergencyContact,
         Stream?ImageStream,
         string?ImageFileName,
@@ -27,12 +30,11 @@ namespace SistRent.Application.DTOs
         int IdTenant,
         string fullname,
         string Email,
+        string Password,
         string? ImageSource,
         string Dni,
         string? Phone,
-        string? EmergencyContact,
-        DateTimeOffset RegistrationDate,
-        bool Status
+        string? EmergencyContact
     );
 
     public record TenantDetailDto(

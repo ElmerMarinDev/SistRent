@@ -19,9 +19,9 @@ namespace SistRent.Domain.Entities
 
         public string? EmergencyContact { get; set; }
 
-        public DateTimeOffset RegistrationDate { get; set; } = DateTimeOffset.UtcNow;
+        //public DateTimeOffset RegistrationDate { get; set; } = DateTimeOffset.UtcNow;
 
-        public bool Status { get; set; }
+        //public bool Status { get; set; }
 
         public virtual User User { get; set; } = null!;
 

@@ -19,11 +19,10 @@ namespace SistRent.Application.Services
                 IdTenant: e.IdTenant,
                 ImageSource:e.User.ImageSource,
                 fullname:e.User.FullName,
-                Status: e.Status,
+                Password:e.User.PasswordHash,
                 Email:e.User.Email,
                 Dni:e.Dni,
                 Phone:e.Phone,
-                RegistrationDate:e.RegistrationDate,
                 EmergencyContact: e.EmergencyContact 
                 ));
 
@@ -40,12 +39,14 @@ namespace SistRent.Application.Services
 
             return new TenantResponseDto(
                 IdTenant: tenant.IdTenant,
-                Status: tenant.Status,
+                ImageSource: tenant.User.ImageSource,
+                fullname: tenant.User.FullName,
+                Password: tenant.User.PasswordHash,
+                Email: tenant.User.Email,
                 Dni: tenant.Dni,
                 Phone: tenant.Phone,
-                RegistrationDate: tenant.RegistrationDate,
                 EmergencyContact: tenant.EmergencyContact
-                );
+             );
 
 
         }
@@ -57,11 +58,12 @@ namespace SistRent.Application.Services
 
             return tenants.Select(e => new TenantResponseDto(
                 IdTenant: e.IdTenant,
-                IdUser: e.IdUser,
-                Status: e.Status,
+                ImageSource: e.User.ImageSource,
+                fullname:e.User.FullName,
+                Password:e.User.PasswordHash,
+                Email: e.User.Email,
                 Dni: e.Dni,
                 Phone: e.Phone,
-                RegistrationDate: e.RegistrationDate,
                 EmergencyContact: e.EmergencyContact
                 ));
 
@@ -80,7 +82,8 @@ namespace SistRent.Application.Services
                 FullName = tenant.Fullname,
                 Email = tenant.Email,
                 IdRole = 2,
-                PasswordHash =tenant.Email
+                PasswordHash =tenant.Email,
+                Status= tenant.Status
             };
 
            
@@ -90,8 +93,7 @@ namespace SistRent.Application.Services
                 User =newUser,
                 Dni = tenant.Dni,
                 Phone =tenant.Phone,
-                EmergencyContact =tenant.EmergencyContact,
-                Status= tenant.Status,
+                EmergencyContact =tenant.EmergencyContact
             };
 
             await _repo.AddAsync(newTenant);
@@ -111,7 +113,16 @@ namespace SistRent.Application.Services
             var UserID = existingTenant.IdUser;
             var existingUser = await _user.GetByIdAsync(UserID);
 
-            if(existingUser.ImageSource!=null && !string.IsNullOrEmpty(existingUser.ImageSource))
+            if (existingUser.FullName != tenant.fullname)
+                existingUser.FullName = tenant.fullname;
+
+            if (existingUser.PasswordHash != tenant.Password)
+                existingUser.PasswordHash = tenant.Password;
+
+            if (existingUser.Status != tenant.Status)
+                existingUser.Status = tenant.Status;
+
+            if (existingUser.ImageSource!=null && !string.IsNullOrEmpty(existingUser.ImageSource))
             {
                 var SourceImagen = "";
                 SourceImagen = await _fileStorageService.SaveImageAsync(tenant.ImageStream, tenant.ImageFileName);            
@@ -137,9 +148,6 @@ namespace SistRent.Application.Services
 
             if (existingTenant.EmergencyContact != tenant.EmergencyContact)
                 existingTenant.EmergencyContact = tenant.EmergencyContact;
-
-            if (existingTenant.Status != tenant.Status)
-                existingTenant.Status = tenant.Status;
 
             await _repo.EditAsync(existingTenant);
         }
