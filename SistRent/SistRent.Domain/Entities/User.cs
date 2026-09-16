@@ -13,6 +13,9 @@ namespace SistRent.Domain.Entities
         public int IdRole { get; set; }
 
         [Required]
+        public string Dni { get; set; } = null!;
+
+        [Required]
         public string FullName { get; set; } = null!;
 
         [Required]
@@ -27,11 +30,16 @@ namespace SistRent.Domain.Entities
 
         public string? ImageSource { get; set; }
 
+        public string? Phone { get; set; }
+
         public DateTimeOffset CreatedAt { get; set; }= DateTimeOffset.UtcNow;
 
         public virtual Role Role { get; set; } = null!;
 
         // Un User puede tener 0 o 1 Tenant
-        public virtual Tenant? Tenant { get; set; }
+        //public virtual Tenant? Tenant { get; set; }
+
+        public virtual ICollection<Contract> Contracts { get; set; }
+            = new List<Contract>();
     }
 }

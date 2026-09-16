@@ -9,6 +9,7 @@ namespace SistRent.Application.Interfaces
     {
         Task<IEnumerable<User>> GetAsync();
         Task<User?> GetByIdAsync(int id);
+        Task<User?> GetByRole(int id);
         Task<User?> LoginAsync(string Email, string password);
         Task AddAsync (User user);
         Task EditAsync(User user);

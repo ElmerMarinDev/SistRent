@@ -42,9 +42,10 @@ namespace SistRent.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-
-
-
+        public async Task<User?> GetByRole(int id)
+        {
+            return await _dbcontext.Users.FirstOrDefaultAsync(u => u.IdRole == id);
+        }
 
 
     }

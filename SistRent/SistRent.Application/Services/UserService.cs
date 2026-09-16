@@ -10,7 +10,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SistRent.Application.Services
 {
-    public class UserService(IUserRepository _repo)
+    public class UserService(IUserRepository _repo, IFileStorageService _fileStorageService)
     {
         public async Task<IEnumerable<UserResponseDto>> GeTAsync()
         {
@@ -18,14 +18,37 @@ namespace SistRent.Application.Services
 
             return users.Select(e => new UserResponseDto(
                 IdUser: e.IdUser,
-                IdRole: e.IdRole,
+                Role: e.Role.Name,
                 FullName: e.FullName,
+                Dni:e.Dni,
                 Email: e.Email,
                 Status: e.Status,
                 MustChangePassword: e.MustChangePassword,
                 ImageSource: e.ImageSource,
                 CreatedAt:e.CreatedAt
                 ));
+
+
+        }
+
+
+        public async Task<UserResponseDto> GetByIdRole(int id)
+        {
+
+            if (id == 0) throw new ValidationException("User id is requeried");
+            var user = await _repo.GetByRole(id);
+
+            return new UserResponseDto(
+                IdUser: user.IdUser,
+                Role: user.Role.Name,
+                FullName: user.FullName,
+                Dni:user.Dni,
+                Email: user.Email,
+                Status: user.Status,
+                MustChangePassword: user.MustChangePassword,
+                ImageSource: user.ImageSource,
+                CreatedAt: user.CreatedAt
+                );
 
 
         }
@@ -39,7 +62,8 @@ namespace SistRent.Application.Services
 
             return new UserResponseDto(
                 IdUser: user.IdUser,
-                IdRole: user.IdRole,
+                Dni:user.Dni,
+                Role: user.Role.Name,
                 FullName: user.FullName,
                 Email: user.Email,
                 Status:user.Status,
@@ -63,7 +87,8 @@ namespace SistRent.Application.Services
 
             return new UserResponseDto(
                 IdUser: user.IdUser,
-                IdRole: user.IdRole,
+                Role: user.Role.Name,
+                Dni:user.Dni,
                 FullName: user.FullName,
                 Email: user.Email,
                 Status: user.Status,
@@ -99,8 +124,11 @@ namespace SistRent.Application.Services
             var newUser = new User
             {
                 FullName = user.FullName,
+                Dni=user.Dni,
                 Email = user.Email,
                 IdRole = user.IdRole,
+                Phone=user.Phone,
+                Status=user.Status,
                 PasswordHash = user.Email
             };
 
@@ -126,6 +154,23 @@ namespace SistRent.Application.Services
 
             if (existingUser.IdRole != user.IdRole)
                 existingUser.IdRole = user.IdRole;
+
+            if (existingUser.Phone != user.Phone)
+                existingUser.Phone = user.Phone;
+
+            if (user.ImageStream != null && !string.IsNullOrEmpty(user.ImageFileName))
+            {
+                var SourceImagen = "";
+                SourceImagen = await _fileStorageService.SaveImageAsync(user.ImageStream,user.ImageFileName);
+
+                if (!string.IsNullOrEmpty(existingUser.ImageSource))
+                {
+
+                    await _fileStorageService.DeletemageAsync(existingUser.ImageSource);
+                }
+
+                existingUser.ImageSource = SourceImagen;
+            }
 
             if (existingUser.MustChangePassword != user.MustChangePassword)
                 existingUser.MustChangePassword = user.MustChangePassword;

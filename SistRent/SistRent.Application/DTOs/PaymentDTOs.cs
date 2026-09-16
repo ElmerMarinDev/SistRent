@@ -32,7 +32,7 @@ namespace SistRent.Application.DTOs
         public record PaymentResponseDto(
             int IdPayment,
             int IdContract,
-            int IdPaymentMethod,
+            string PaymentMethod,
             DateTime PaymentDate,
             DateTime PeriodStart,
             DateTime PeriodEnd,
@@ -40,7 +40,6 @@ namespace SistRent.Application.DTOs
             decimal LateFee,
             decimal TotalAmount,
             string Status,
-            string? Notes,
             DateTimeOffset CreatedAt
         );
 }

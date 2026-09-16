@@ -7,9 +7,10 @@ namespace SistRent.Application.DTOs
 
     public record UserResponseDto(
         int IdUser,
-        int IdRole,
+        string Role,
         string FullName,
         string Email,
+        string Dni,
         bool Status,
         bool MustChangePassword,
         string? ImageSource,
@@ -29,6 +30,8 @@ namespace SistRent.Application.DTOs
         int IdRole,
         string FullName,
         string Email,
+        string Dni,
+        string Phone,
         string Password,
         bool Status,
         string? ImageSource
@@ -40,8 +43,11 @@ namespace SistRent.Application.DTOs
         string FullName,
         string Email,
         bool Status,
+        string Phone,
         string? ImageSource,
-        bool MustChangePassword
+        bool MustChangePassword,
+        Stream? ImageStream,
+        string? ImageFileName
     );
 
     public record ResetPasswordDto(

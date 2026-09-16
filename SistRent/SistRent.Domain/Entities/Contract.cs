@@ -11,7 +11,7 @@ namespace SistRent.Domain.Entities
     {
         public int IdContract { get; set; }
 
-        public int IdTenant { get; set; }
+        public int IdUser { get; set; }
 
         public int IdRoom { get; set; }
 
@@ -30,7 +30,7 @@ namespace SistRent.Domain.Entities
 
         public string? Notes { get; set; }
 
-        public virtual Tenant Tenant { get; set; } = null!;
+        public virtual User User { get; set; } = null!;
 
         public virtual Room Room { get; set; } = null!;
 

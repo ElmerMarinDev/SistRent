@@ -7,7 +7,7 @@ namespace SistRent.Application.DTOs
 {
 
     public record ContractCreateDto(
-        int IdTenant,
+        int IdUser,
         int IdRoom,
         int IdContractStatus,
         DateTime StartDate,
@@ -29,31 +29,26 @@ namespace SistRent.Application.DTOs
 
     public record ContractResponseDto(
         int IdContract,
-        int IdTenant,
-        int IdRoom,
-        int IdContractStatus,
+        string FullName,
+        string RoomNumber,
+        string ContractStatus,
         DateTime StartDate,
         DateTime EndDate,
         decimal MonthlyAmount,
         decimal SecurityDeposit,
-        DateTimeOffset RegistrationDate,
-        string? Notes
+        DateTimeOffset RegistrationDate
         );
 
     public record ContractDetailDto(
         int IdContract,
-        int IdTenant,
-        string TenantName,
-        int IdRoom,
+        string FullName,
         string RoomNumber,
-        int IdContractStatus,
         string ContractStatus,
         DateTime StartDate,
         DateTime EndDate,
         decimal MonthlyAmount,
         decimal SecurityDeposit,
         DateTimeOffset RegistrationDate,
-        string? Notes,
         IReadOnlyCollection<PaymentResponseDto> Payments
         );
 
