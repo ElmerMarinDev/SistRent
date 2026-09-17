@@ -16,14 +16,42 @@ namespace SistRent.Infrastructure.Services
             _options = options.Value;
         }        
         
-        public Task<string> SaveImageAsync(Stream imagenStream, string fileName)
+        public async Task<string> SaveImageAsync(Stream imagenStream, string fileName)
         {
             var extension = Path.GetExtension(fileName).ToLowerInvariant();
             var uniqueFileName = $"{Guid.NewGuid()}{extension}";
+
+            var folderPath = Path.Combine(_options.BaseUrl, _options.ImagesFolder);
+            var filePath = Path.Combine(folderPath, uniqueFileName);
+
+
+            if(!Directory.Exists(folderPath))
+                Directory.CreateDirectory(folderPath);
+
+            using (var fileStream=new FileStream(filePath, FileMode.Create))
+            {
+
+                await imagenStream.CopyToAsync(fileStream);
+            }
+
+            return $"/{_options.ImagesFolder}/{uniqueFileName}";
+
         }
-        public Task<string> DeletemageAsync(string imagePath)
+        public async Task<bool> DeletemageAsync(string imagePath)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(imagePath))
+                return false;
+
+            var relativePath = imagePath.TrimStart('/');
+            var physicalPath = Path.Combine(_options.BaseUrl, relativePath.Replace('/',Path.DirectorySeparatorChar));
+
+            if (File.Exists(physicalPath))
+            {
+                File.Delete(physicalPath);
+                return await Task.FromResult(true);
+            }
+
+            return await Task.FromResult(false);
         }
 
 
