@@ -136,15 +136,7 @@ namespace SistRent.Application.Services
         }
 
 
-        public async Task UpdateAsync(UserUpdateDto user)
-        {
-            if (user.UserId == 0) throw new ValidationException("User id is requeried");
-            if (string.IsNullOrEmpty(user.FullName)) throw new ValidationException("Full Name id is requeried");
-            if (string.IsNullOrEmpty(user.Email)) throw new ValidationException("Email id is requeried");
-
-            var existingUser = await _repo.GetByIdAsync(user.UserId);
-
-            if (existingUser is null) throw new ValidationException("User not found");
+        public User UpdateData(UserUpdateDto user,User existingUser) {
 
             if (existingUser.FullName != user.FullName)
                 existingUser.FullName = user.FullName;
@@ -158,10 +150,20 @@ namespace SistRent.Application.Services
             if (existingUser.Phone != user.Phone)
                 existingUser.Phone = user.Phone;
 
+            if (existingUser.MustChangePassword != user.MustChangePassword)
+                existingUser.MustChangePassword = user.MustChangePassword;
+
+            return existingUser;
+
+        }
+
+
+        public async Task UpdateImagen(UserUpdateDto user, User existingUser)
+        {
             if (user.ImageStream != null && !string.IsNullOrEmpty(user.ImageFileName))
             {
                 var SourceImagen = "";
-                SourceImagen = await _fileStorageService.SaveImageAsync(user.ImageStream,user.ImageFileName);
+                SourceImagen = await _fileStorageService.SaveImageAsync(user.ImageStream, user.ImageFileName);
 
                 if (!string.IsNullOrEmpty(existingUser.ImageSource))
                 {
@@ -172,8 +174,24 @@ namespace SistRent.Application.Services
                 existingUser.ImageSource = SourceImagen;
             }
 
-            if (existingUser.MustChangePassword != user.MustChangePassword)
-                existingUser.MustChangePassword = user.MustChangePassword;
+        }
+
+
+
+
+
+        public async Task UpdateAsync(UserUpdateDto user)
+        {
+            if (user.UserId == 0) throw new ValidationException("User id is requeried");
+            if (string.IsNullOrEmpty(user.FullName)) throw new ValidationException("Full Name id is requeried");
+            if (string.IsNullOrEmpty(user.Email)) throw new ValidationException("Email id is requeried");
+
+            var existingUser = await _repo.GetByIdAsync(user.UserId);
+
+            if (existingUser is null) throw new ValidationException("User not found");
+
+            UpdateData(user,existingUser);
+            await UpdateImagen(user, existingUser);
 
             await _repo.EditAsync(existingUser);
         }

@@ -10,6 +10,7 @@ namespace SistRent.Application.DTOs
     );
 
     public record ContractStatusUpdateDto(
+        int IdContractStatus,
         string Name,
         string? Description
     );

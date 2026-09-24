@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="SistRent.API/SistRent.API.csproj" Id="ae34d21d-ab18-4cee-af34-5c31d09c8366" />
   <Project Path="SistRent.Application/SistRent.Application.csproj" />
   <Project Path="SistRent.Domain/SistRent.Domain.csproj" />
   <Project Path="SistRent.Infrastructure/SistRent.Infrastructure.csproj" />
