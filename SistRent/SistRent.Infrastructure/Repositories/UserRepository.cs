@@ -13,22 +13,22 @@ namespace SistRent.Infrastructure.Repositories
 
         public async Task<IEnumerable<User>> GetAsync()
         {
-            return await _dbcontext.Users.ToListAsync();
+            return await _dbcontext.User.ToListAsync();
         }
 
         public async Task<User?> GetByIdAsync(int id)
         {
-            return await _dbcontext.Users.FirstOrDefaultAsync(u=>u.IdUser==id);
+            return await _dbcontext.User.FirstOrDefaultAsync(u=>u.IdUser==id);
         }
 
         public async Task<User?> LoginAsync(string Email, string password)
         {
-            return await _dbcontext.Users.FirstOrDefaultAsync(u => u.Email == Email && u.PasswordHash==password);
+            return await _dbcontext.User.FirstOrDefaultAsync(u => u.Email == Email && u.PasswordHash==password);
         }
 
         public async Task AddAsync(User user)
         {
-            await _dbcontext.Users.AddAsync(user);
+            await _dbcontext.User.AddAsync(user);
             await _dbcontext.SaveChangesAsync();
         }
 
@@ -44,7 +44,7 @@ namespace SistRent.Infrastructure.Repositories
 
         public async Task<User?> GetByRole(int id)
         {
-            return await _dbcontext.Users.FirstOrDefaultAsync(u => u.IdRole == id);
+            return await _dbcontext.User.FirstOrDefaultAsync(u => u.IdRole == id);
         }
 
 
