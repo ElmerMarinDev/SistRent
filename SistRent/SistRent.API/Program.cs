@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using SistRent.Application;
+using SistRent.Infrastructure;
 using SistRent.Infrastructure.DataBase;
 using SistRent.Infrastructure.Options;
 
@@ -10,9 +12,10 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-builder.Services.AddDbContext<AppDBContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("cadenaSQL"))
-);
+//builder.Services.AddDbContext<AppDBContext>(options =>
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("cadenaSQL"))
+//);
+builder.Services.AddInfrasEstructureServices(builder.Configuration).AddApplicationServices();
 
 builder.Services.Configure<FileStorageOptions>(options=>
 {

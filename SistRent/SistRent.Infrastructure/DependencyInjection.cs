@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SistRent.Application.Interfaces;
 using SistRent.Infrastructure.DataBase;
+using SistRent.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -17,7 +18,7 @@ namespace SistRent.Infrastructure
             services.AddDbContext<AppDBContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("cadenaSQL")));
 
-            services.AddScoped<IUserRepository, IUserRepository>();
+            services.AddScoped<IUserRepository,UserRepository>();
 
             return services;
 

@@ -32,14 +32,17 @@ namespace SistRent.Infrastructure.Repositories
             await _dbcontext.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(int Id)
         {
-            throw new NotImplementedException();
+            var user = await _dbcontext.User.FindAsync(Id);
+            _dbcontext.User.Remove(user);
+            await _dbcontext.SaveChangesAsync();
         }
 
-        public Task EditAsync(User user)
+        public async Task EditAsync(User user)
         {
-            throw new NotImplementedException();
+            _dbcontext.User.Update(user);
+            await _dbcontext.SaveChangesAsync();
         }
 
         public async Task<User?> GetByRole(int id)
