@@ -43,5 +43,20 @@ namespace SistRent.API.Controllers
             var users = await _userService.GetByIdAsync(id);
             return Ok(users);
         }
+
+        [HttpPut]
+        [Route("Update")]
+        public async Task<IActionResult> Update([FromBody] UserUpdateDto request)
+        {
+            await _userService.UpdateAsync(request);
+            return Ok(new {msg="user updated"} );
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _userService.DeleteAsync(id);
+            return NoContent();
+        }
     }
 }
