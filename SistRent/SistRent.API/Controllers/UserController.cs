@@ -36,9 +36,8 @@ namespace SistRent.API.Controllers
             return Ok(users);
         }
 
-        [HttpGet]
-        [Route("Get")]
-        public async Task<IActionResult> Get([FromQuery]int id)
+        [HttpGet("{id:int}")]   
+        public async Task<IActionResult> Get(int id)
         {
             var users = await _userService.GetByIdAsync(id);
             return Ok(users);

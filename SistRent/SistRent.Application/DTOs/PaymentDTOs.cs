@@ -18,6 +18,7 @@ namespace SistRent.Application.DTOs
         );
 
         public record PaymentUpdateDto(
+            int IdPayment,
             int IdPaymentMethod,
             DateTime PaymentDate,
             DateTime PeriodStart,
