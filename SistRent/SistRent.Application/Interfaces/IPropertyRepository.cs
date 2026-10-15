@@ -9,7 +9,7 @@ namespace SistRent.Application.Interfaces
     {
         Task<IEnumerable<Property>> GetAsync();
         Task<IEnumerable<Property>> GetByParameterAsync(string parameter);
-        Task<Room?> GetByIdAsync(int id);
+        Task<Property?> GetByIdAsync(int id);
         Task AddAsync(Property Property);
         Task EditAsync(Property Property);
         Task DeleteAsync(int id);

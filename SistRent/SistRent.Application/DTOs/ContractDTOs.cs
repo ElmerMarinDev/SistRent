@@ -49,7 +49,8 @@ namespace SistRent.Application.DTOs
         decimal MonthlyAmount,
         decimal SecurityDeposit,
         DateTimeOffset RegistrationDate,
-        IReadOnlyCollection<PaymentResponseDto> Payments
+        IEnumerable<PaymentDetailDto> Payments
         );
+
 
 }

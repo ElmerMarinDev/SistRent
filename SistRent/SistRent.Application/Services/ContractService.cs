@@ -48,7 +48,7 @@ namespace SistRent.Application.Services
                 MonthlyAmount: contract.MonthlyAmount,
                 SecurityDeposit: contract.SecurityDeposit,
                 RegistrationDate: contract.RegistrationDate,
-                Payments: contract.Payments.Select(c => new PaymentResponseDto(
+                Payments: contract.Payments.Select(c => new PaymentDetailDto(
                             IdPayment: c.IdPayment,
                             IdContract: c.IdContract,
                             PaymentMethod: c.PaymentMethod.Name,
@@ -60,7 +60,7 @@ namespace SistRent.Application.Services
                             TotalAmount: c.TotalAmount,
                             Status: c.Status,
                             CreatedAt: c.CreatedAt
-                    )).ToList()
+                    ))
                 );
 
 

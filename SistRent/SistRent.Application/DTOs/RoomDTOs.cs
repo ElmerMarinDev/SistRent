@@ -14,7 +14,21 @@ namespace SistRent.Application.DTOs
         string? Description
     );
 
+
+    public record RoomDetailDto(
+        int IdRoom,
+        string PropertyName,
+        string RoomTypeName,
+        string RoomNumber,
+        string? Floor,
+        decimal MonthlyPrice,
+        string Status,
+        string? Description
+
+    );
+
     public record RoomUpdateDto(
+        int IdRoom,
         int IdProperty,
         int IdRoomType,
         string RoomNumber,
@@ -26,9 +40,7 @@ namespace SistRent.Application.DTOs
 
     public record RoomResponseDto(
         int IdRoom,
-        int IdProperty,
         string PropertyName,
-        int IdRoomType,
         string RoomTypeName,
         string RoomNumber,
         string? Floor,

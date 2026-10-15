@@ -43,5 +43,22 @@ namespace SistRent.Application.DTOs
             string Status,
             DateTimeOffset CreatedAt
         );
+
+
+         public record PaymentDetailDto(
+            int IdPayment,
+            int IdContract,
+            string PaymentMethod,
+            DateTime PaymentDate,
+            DateTime PeriodStart,
+            DateTime PeriodEnd,
+            decimal Amount,
+            decimal LateFee,
+            decimal TotalAmount,
+            string Status,
+            DateTimeOffset CreatedAt
+        );
+
+
 }
 

@@ -11,6 +11,7 @@ namespace SistRent.Application.DTOs
         bool Status
     );
     public record PropertyUpdateDto(
+     int IdProperty,
         string Name,
         string Address,
         string? Description,
