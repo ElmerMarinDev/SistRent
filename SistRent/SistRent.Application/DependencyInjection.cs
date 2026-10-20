@@ -11,6 +11,15 @@ namespace SistRent.Application
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
+       
+            services.AddScoped<ContractService>();
+            services.AddScoped<ContractStatusService>();
+            services.AddScoped<PaymentService>();
+            services.AddScoped<PaymentMethodService>();
+            services.AddScoped<PropertyService>();    
+            services.AddScoped<RoomService>();
+            services.AddScoped<RoomTypeService>();
+            services.AddScoped<RoleService>();  
             services.AddScoped<UserService>();
 
             return services;

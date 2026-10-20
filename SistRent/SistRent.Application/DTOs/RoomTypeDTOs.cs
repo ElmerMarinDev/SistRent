@@ -10,6 +10,7 @@ namespace SistRent.Application.DTOs
     );
 
     public record RoomTypeUpdateDto(
+        int IdRoomType,
         string Name,
         string? Description
     );

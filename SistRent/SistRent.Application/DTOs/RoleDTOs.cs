@@ -11,6 +11,7 @@ namespace SistRent.Application.DTOs
     );
 
     public record RoleUpdateDto(
+        int IdRole,
         string Name,
         string? Description
     );
