@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SistRent.Application.DTOs;
 using SistRent.Application.Interfaces;
 using SistRent.Application.Services;
+using SistRent.Domain.Entities;
 
 namespace SistRent.API.Controllers
 {
@@ -40,6 +41,14 @@ namespace SistRent.API.Controllers
         public async Task<IActionResult> Get(int id)
         {
             var users = await _userService.GetByIdAsync(id);
+
+            if (users is null)
+            {
+                return NotFound(new
+                {
+                    message = "Usuario no encontrado"
+                });
+            }
             return Ok(users);
         }
 

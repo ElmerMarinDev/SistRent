@@ -1,4 +1,5 @@
-﻿using SistRent.Application.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using SistRent.Application.Interfaces;
 using SistRent.Domain.Entities;
 using SistRent.Infrastructure.DataBase;
 using System;
@@ -9,24 +10,29 @@ namespace SistRent.Infrastructure.Repositories
 {
     public class PaymentMethodRepository(AppDBContext _dbcontext) : IPaymentMethodRepository
     {
-        public Task AddAsync(PaymentMethod payment)
+        public async Task AddAsync(PaymentMethod payment)
         {
-            throw new NotImplementedException();
+            await _dbcontext.PaymentMethod.AddAsync(payment);
+            await _dbcontext.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var paymentMethod = await _dbcontext.User.FindAsync(id);
+            _dbcontext.User.Remove(paymentMethod);
+            await _dbcontext.SaveChangesAsync();
+
         }
 
-        public Task EditAsync(PaymentMethod payment)
+        public async Task EditAsync(PaymentMethod payment)
         {
-            throw new NotImplementedException();
+            _dbcontext.PaymentMethod.Update(payment);
+            await _dbcontext.SaveChangesAsync();
         }
 
-        public Task<IEnumerable<PaymentMethod>> GetAsync()
+        public async Task<IEnumerable<PaymentMethod>> GetAsync()
         {
-            throw new NotImplementedException();
+            return await _dbcontext.PaymentMethod.ToListAsync();
         }
 
         public Task<IEnumerable<PaymentMethod>> GetAsync(DateOnly startDate, DateOnly endDate)
@@ -34,9 +40,9 @@ namespace SistRent.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<PaymentMethod?> GetByIdAsync(int id)
+        public async Task<PaymentMethod?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _dbcontext.PaymentMethod.FirstOrDefaultAsync(u => u.IdPaymentMethod == id);
         }
     }
 }

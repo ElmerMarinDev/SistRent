@@ -1,4 +1,5 @@
-﻿using SistRent.Application.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using SistRent.Application.Interfaces;
 using SistRent.Domain.Entities;
 using SistRent.Infrastructure.DataBase;
 using System;
@@ -9,34 +10,39 @@ namespace SistRent.Infrastructure.Repositories
 {
     public class RoomRepository(AppDBContext _dbcontext) : IRoomRepository
     {
-        public Task AddAsync(Room room)
+        public async Task AddAsync(Room room)
         {
-            throw new NotImplementedException();
+            await _dbcontext.Room.AddAsync(room);
+            await _dbcontext.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var room = await _dbcontext.Room.FindAsync(id);
+            _dbcontext.Room.Remove(room);
+            await _dbcontext.SaveChangesAsync();
         }
 
-        public Task EditAsync(Room room)
+        public async Task EditAsync(Room room)
         {
-            throw new NotImplementedException();
+            _dbcontext.Room.Update(room);
+            await _dbcontext.SaveChangesAsync();
         }
 
-        public Task<IEnumerable<Room>> GetAsync()
+        public async Task<IEnumerable<Room>> GetAsync()
         {
-            throw new NotImplementedException();
+            return await _dbcontext.Room.ToListAsync();
         }
 
-        public Task<Room?> GetByIdAsync(int id)
+        public async Task<Room?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _dbcontext.Room.FirstOrDefaultAsync(u => u.IdRoom == id);
         }
 
-        public Task<IEnumerable<Room>> GetByParameterAsync(string parameter)
+        public async Task<IEnumerable<Room>> GetByParameterAsync(string parameter)
         {
-            throw new NotImplementedException();
+            return await _dbcontext.Room.
+                Where(p => p.Description.Contains(parameter) || p.RoomNumber.Contains(parameter)).ToListAsync();
         }
     }
 }

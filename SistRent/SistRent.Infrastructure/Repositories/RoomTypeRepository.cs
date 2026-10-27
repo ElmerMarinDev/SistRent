@@ -1,4 +1,5 @@
-﻿using SistRent.Application.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using SistRent.Application.Interfaces;
 using SistRent.Domain.Entities;
 using SistRent.Infrastructure.DataBase;
 using System;
@@ -9,29 +10,34 @@ namespace SistRent.Infrastructure.Repositories
 {
     public class RoomTypeRepository(AppDBContext _dbcontext) : IRoomTypeRepository
     {
-        public Task AddAsync(RoomType room)
+        public async Task AddAsync(RoomType room)
         {
-            throw new NotImplementedException();
+            await _dbcontext.RoomType.AddAsync(room);
+            await _dbcontext.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var roomType = await _dbcontext.RoomType.FindAsync(id);
+            _dbcontext.RoomType.Remove(roomType);
+            await _dbcontext.SaveChangesAsync();
+
         }
 
-        public Task EditAsync(RoomType room)
+        public async Task EditAsync(RoomType roomType)
         {
-            throw new NotImplementedException();
+            _dbcontext.RoomType.Update(roomType);
+            await _dbcontext.SaveChangesAsync();
         }
 
-        public Task<IEnumerable<RoomType>> GetAsync()
+        public async Task<IEnumerable<RoomType>> GetAsync()
         {
-            throw new NotImplementedException();
+            return await _dbcontext.RoomType.ToListAsync();
         }
 
-        public Task<RoomType?> GetByIdAsync(int id)
+        public async Task<RoomType?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _dbcontext.RoomType.FirstOrDefaultAsync(u => u.IdRoomType == id);
         }
 
         public Task<IEnumerable<RoomType>> GetByParameterAsync(string parameter)

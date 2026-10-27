@@ -1,4 +1,5 @@
-﻿using SistRent.Application.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using SistRent.Application.Interfaces;
 using SistRent.Domain.Entities;
 using SistRent.Infrastructure.DataBase;
 using System;
@@ -9,24 +10,28 @@ namespace SistRent.Infrastructure.Repositories
 {
     public class PaymentRepository(AppDBContext _dbcontext) : IPaymentRepository
     {
-        public Task AddAsync(Payment payment)
+        public async Task AddAsync(Payment payment)
         {
-            throw new NotImplementedException();
+            await _dbcontext.Payment.AddAsync(payment);
+            await _dbcontext.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var payment = await _dbcontext.Payment.FindAsync(id);
+            _dbcontext.Payment.Remove(payment);
+            await _dbcontext.SaveChangesAsync();
         }
 
-        public Task EditAsync(Payment payment)
+        public async Task EditAsync(Payment payment)
         {
-            throw new NotImplementedException();
+            _dbcontext.Payment.Update(payment);
+            await _dbcontext.SaveChangesAsync();
         }
 
-        public Task<IEnumerable<Payment>> GetAsync()
+        public async Task<IEnumerable<Payment>> GetAsync()
         {
-            throw new NotImplementedException();
+            return await _dbcontext.Payment.ToListAsync();
         }
 
         public Task<IEnumerable<Payment>> GetAsync(DateOnly startDate, DateOnly endDate)
@@ -34,9 +39,9 @@ namespace SistRent.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<Payment?> GetByIdAsync(int id)
+        public async Task<Payment?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _dbcontext.Payment.FirstOrDefaultAsync(u => u.IdPayment== id);
         }
     }
 }

@@ -29,8 +29,8 @@ namespace SistRent.Infrastructure.Repositories
 
         public async Task DeleteAsync(int Id)
         {
-            var user = await _dbcontext.ContractStatus.FindAsync(Id);
-            _dbcontext.ContractStatus.Remove(user);
+            var contraStatus = await _dbcontext.ContractStatus.FindAsync(Id);
+            _dbcontext.ContractStatus.Remove(contraStatus);
             await _dbcontext.SaveChangesAsync();
         }
 

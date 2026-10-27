@@ -1,4 +1,5 @@
-﻿using SistRent.Application.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using SistRent.Application.Interfaces;
 using SistRent.Domain.Entities;
 using SistRent.Infrastructure.DataBase;
 using System;
@@ -9,29 +10,33 @@ namespace SistRent.Infrastructure.Repositories
 {
     public class PropertyRepository(AppDBContext _dbcontext) : IPropertyRepository
     {
-        public Task AddAsync(Property Property)
+        public async Task AddAsync(Property property)
         {
-            throw new NotImplementedException();
+            await _dbcontext.Property.AddAsync(property);
+            await _dbcontext.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var property = await _dbcontext.Property.FindAsync(id);
+            _dbcontext.Property.Remove(property);
+            await _dbcontext.SaveChangesAsync();
         }
 
-        public Task EditAsync(Property Property)
+        public async Task EditAsync(Property property)
         {
-            throw new NotImplementedException();
+            _dbcontext.Property.Update(property);
+            await _dbcontext.SaveChangesAsync();
         }
 
-        public Task<IEnumerable<Property>> GetAsync()
+        public async Task<IEnumerable<Property>> GetAsync()
         {
-            throw new NotImplementedException();
+            return await _dbcontext.Property.ToListAsync();
         }
 
-        public Task<Property?> GetByIdAsync(int id)
+        public async Task<Property?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _dbcontext.Property.FirstOrDefaultAsync(u => u.IdProperty == id);
         }
 
         public Task<IEnumerable<Property>> GetByParameterAsync(string parameter)
