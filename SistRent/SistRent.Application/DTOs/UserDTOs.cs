@@ -17,6 +17,15 @@ namespace SistRent.Application.DTOs
         DateTimeOffset CreatedAt
     );
 
+    public record LoginResponseDto(
+    string Token,
+    int IdUser,
+    string FullName,
+    string Email,
+    bool MustChangePassword
+);
+
+
     public record LoginUserDto(
         string Email,
         string Password
