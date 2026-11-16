@@ -19,6 +19,9 @@ namespace SistRent.Infrastructure.DataBase
         public DbSet<RoomType> RoomType { get; set; } 
         public DbSet<User> User { get; set; }
 
+        public DbSet<PasswordResetToken> PasswordResetTokens => Set<PasswordResetToken>();
+        public DbSet<RefreshToken> RefreshTokens=> Set<RefreshToken>();
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -49,6 +52,10 @@ namespace SistRent.Infrastructure.DataBase
 
             modelBuilder.Entity<PaymentMethod>()
                 .HasKey(pm => pm.IdPaymentMethod);
+
+
+            modelBuilder.Entity<PasswordResetToken>()
+                .HasKey(pm => pm.IdPasswordResetToken);
 
         }
 

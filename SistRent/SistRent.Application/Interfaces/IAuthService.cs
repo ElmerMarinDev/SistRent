@@ -9,12 +9,12 @@ namespace SistRent.Application.Interfaces
     {
         Task<LoginResponseDto> LoginAsync(LoginUserDto request);
 
-        Task ChangePasswordAsync(
-            int userId,
-            ChangePasswordDto request);
+        Task ForgotPasswordAsync(ForgotPasswordDto request);
 
-        Task ResetPasswordAsync(
-            int userId,
-            ResetPasswordDto request);
+        Task ResetPasswordWithTokenAsync(ResetPasswordWithTokenDto request);
+
+        Task ChangePasswordAsync(int userId,ChangePasswordDto request);
+
+        Task ResetPasswordAsync(int userId,ResetPasswordDto request);
     }
 }

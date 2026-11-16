@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SistRent.Application.DTOs;
 using SistRent.Application.Interfaces;
@@ -12,10 +13,11 @@ namespace SistRent.API.Controllers
     public class UserController : ControllerBase
     {
         private readonly UserService _userService;
-
-        public UserController(UserService userService)
+        private readonly IAuthService _authService;
+        public UserController(UserService userService, IAuthService authService)
         {
             _userService = userService;
+            _authService = authService;
         }
 
         [HttpPost]
@@ -65,6 +67,22 @@ namespace SistRent.API.Controllers
         {
             await _userService.DeleteAsync(id);
             return NoContent();
+        }
+
+        [HttpPost("ResetPassword/{id:int}")]
+        [Authorize(Roles = "Administrador")]
+        public async Task<IActionResult> ResetPassword(int id,[FromBody] ResetPasswordDto request)
+        {
+            try
+            {
+                await _authService.ResetPasswordAsync(id, request);
+
+                return NoContent();
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
         }
     }
 }

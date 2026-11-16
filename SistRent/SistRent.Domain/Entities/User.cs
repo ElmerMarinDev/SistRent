@@ -38,5 +38,7 @@ namespace SistRent.Domain.Entities
 
         public virtual ICollection<Contract> Contracts { get; set; }
             = new List<Contract>();
+
+        public ICollection<PasswordResetToken> PasswordResetTokens{ get; set; } = new List<PasswordResetToken>();
     }
 }

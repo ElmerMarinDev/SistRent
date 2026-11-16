@@ -3,7 +3,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SistRent.Application.DTOs;
 using SistRent.Application.Interfaces;
+using SistRent.Infrastructure.Repositories;
 using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace SistRent.API.Controllers
 {
@@ -22,9 +25,8 @@ namespace SistRent.API.Controllers
         // POST: api/Auth/Login
         [HttpPost("Login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(
-            [FromBody] LoginUserDto request)
-        {
+        public async Task<IActionResult> Login([FromBody] LoginUserDto request)
+        { 
             try
             {
                 var result = await _authService.LoginAsync(request);
@@ -40,29 +42,26 @@ namespace SistRent.API.Controllers
             }
         }
 
-        // POST: api/Auth/ChangePassword
-        [HttpPost("ChangePassword")]
-        [Authorize]
-        public async Task<IActionResult> ChangePassword(
-            [FromBody] ChangePasswordDto request)
+        [HttpPost("ForgotPassword")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordDto request)
+        {
+            await _authService.ForgotPasswordAsync(request);
+
+            return Ok(new
+            {
+                message = "Si el correo está registrado, recibirás instrucciones para recuperar tu contraseña."
+            });
+        }
+
+        [HttpPost("ResetPassword/{id:int}")]
+        public async Task<IActionResult> ResetPassword(int id,[FromBody] ResetPasswordDto request)
         {
             try
             {
-                var userIdValue = User.FindFirstValue(
-                    ClaimTypes.NameIdentifier);
-
-                if (!int.TryParse(userIdValue, out int userId))
-                    return Unauthorized();
-
-                await _authService.ChangePasswordAsync(
-                    userId,
-                    request);
+                await _authService.ResetPasswordAsync(id, request);
 
                 return NoContent();
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                return Unauthorized(new { message = ex.Message });
             }
             catch (KeyNotFoundException ex)
             {
@@ -74,25 +73,16 @@ namespace SistRent.API.Controllers
             }
         }
 
-        // POST: api/Auth/ResetPassword/5
-        [HttpPost("ResetPassword/{id:int}")]
-        [Authorize(Roles = "Administrador")]
-        public async Task<IActionResult> ResetPassword(
-            int id,
-            [FromBody] ResetPasswordDto request)
+        [AllowAnonymous]
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword(ResetPasswordWithTokenDto request)
         {
-            try
-            {
-                await _authService.ResetPasswordAsync(
-                    id,
-                    request);
+            await _authService.ResetPasswordWithTokenAsync(request);
 
-                return NoContent();
-            }
-            catch (KeyNotFoundException ex)
+            return Ok(new
             {
-                return NotFound(new { message = ex.Message });
-            }
+                Message = "Contraseña actualizada correctamente."
+            });
         }
     }
 

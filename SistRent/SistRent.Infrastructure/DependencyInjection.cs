@@ -1,14 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SistRent.Application.Interfaces;
+using SistRent.Application.Services;
+using SistRent.Domain.Entities;
 using SistRent.Infrastructure.DataBase;
 using SistRent.Infrastructure.Repositories;
 using SistRent.Infrastructure.Services;
+using SistRent.Infrastructure.Settings;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
+
 
 namespace SistRent.Infrastructure
 {
@@ -32,6 +37,14 @@ namespace SistRent.Infrastructure
             services.AddScoped<IUserRepository,UserRepository>();
 
             services.AddScoped<IFileStorageService, FileStorageService>();
+
+            services.AddScoped<IPasswordResetTokenRepository,PasswordResetTokenRepository>();
+
+            services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
+
+            services.AddScoped<IEmailService, EmailService>();
+
+            services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
             return services;
 

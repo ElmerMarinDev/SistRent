@@ -39,7 +39,7 @@ namespace SistRent.Infrastructure.Repositories
             await _dbcontext.SaveChangesAsync();
         }
 
-        public async Task EditAsync(User user)
+        public async Task UpdateAsync(User user)
         {
             _dbcontext.User.Update(user);
             await _dbcontext.SaveChangesAsync();
@@ -48,6 +48,14 @@ namespace SistRent.Infrastructure.Repositories
         public async Task<User?> GetByRole(int id)
         {
             return await _dbcontext.User.FirstOrDefaultAsync(u => u.IdRole == id);
+        }
+
+
+        public async Task<User?> GetByEmailAsync(string email)
+        {
+            return await _dbcontext.User
+                .Include(u => u.Role)
+                .FirstOrDefaultAsync(u => u.Email == email);
         }
 
 

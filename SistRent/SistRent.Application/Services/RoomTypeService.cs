@@ -40,30 +40,30 @@ namespace SistRent.Application.Services
 
 
 
-        public async Task AddAsync(RoleCreateDto rol)
+        public async Task AddAsync(RoomTypeCreateDto roomType)
         {
 
-            if (string.IsNullOrEmpty(rol.Name)) throw new ValidationException("Full Name id is requeried");
-            if (string.IsNullOrEmpty(rol.Description)) throw new ValidationException("Email id is requeried");
+            if (string.IsNullOrEmpty(roomType.Name)) throw new ValidationException("Full Name id is requeried");
+            if (string.IsNullOrEmpty(roomType.Description)) throw new ValidationException("Email id is requeried");
 
             var newRoomType = new RoomType
             {
-                Name = rol.Name,
-                Description = rol.Description
+                Name = roomType.Name,
+                Description = roomType.Description
             };
 
             await _repo.AddAsync(newRoomType);
         }
 
 
-        public RoomType UpdateData(RoomTypeUpdateDto rol, RoomType existingRoomType)
+        public RoomType UpdateData(RoomTypeUpdateDto room, RoomType existingRoomType)
         {
 
-            if (existingRoomType.Name != rol.Name)
-                existingRoomType.Name = rol.Name;
+            if (existingRoomType.Name != room.Name)
+                existingRoomType.Name = room.Name;
 
-            if (existingRoomType.Description != rol.Description)
-                existingRoomType.Description = rol.Description;
+            if (existingRoomType.Description != room.Description)
+                existingRoomType.Description = room.Description;
 
 
 

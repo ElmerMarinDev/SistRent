@@ -1,4 +1,5 @@
-﻿using SistRent.Application.DTOs;
+﻿using Microsoft.AspNetCore.Identity;
+using SistRent.Application.DTOs;
 using SistRent.Application.Interfaces;
 using SistRent.Domain.Entities;
 using System;
@@ -12,6 +13,8 @@ namespace SistRent.Application.Services
 {
     public class UserService(IUserRepository _repo, IFileStorageService _fileStorageService)
     {
+        private readonly IPasswordHasher<User> _passwordHasher;
+
         public async Task<IEnumerable<UserResponseDto>> GeTAsync()
         {
             var users = await _repo.GetAsync();
@@ -112,7 +115,7 @@ namespace SistRent.Application.Services
             existingUser.PasswordHash = data.NewPassword;
             existingUser.MustChangePassword = false;
 
-            await _repo.EditAsync(existingUser);
+            await _repo.UpdateAsync(existingUser);
         }
 
         public async Task AddAsync(UserCreateDto user)
@@ -131,6 +134,8 @@ namespace SistRent.Application.Services
                 Status=user.Status,
                 PasswordHash = user.Email
             };
+
+            newUser.PasswordHash=_passwordHasher.HashPassword(newUser,user.Password);
 
             await _repo.AddAsync(newUser);
         }
@@ -193,7 +198,7 @@ namespace SistRent.Application.Services
             UpdateData(user,existingUser);
             await UpdateImagen(user, existingUser);
 
-            await _repo.EditAsync(existingUser);
+            await _repo.UpdateAsync(existingUser);
         }
 
         public async Task DeleteAsync(int id)
