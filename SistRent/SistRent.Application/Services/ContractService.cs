@@ -88,5 +88,25 @@ namespace SistRent.Application.Services
             await _repo.AddAsync(newContract);
         }
 
+        public async Task UpdateAsync(ContractUpdateDto contract)
+        {
+            if (contract.IdContract == 0) throw new ValidationException("User id is requeried");
+
+
+            var existingUser = await _repo.GetByIdAsync(contract.IdContract);
+
+            if (existingUser is null) throw new ValidationException("User not found");
+
+
+            await _repo.EditAsync(existingUser);
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            if (id == 0) throw new ValidationException("User id is requeried");
+            await _repo.DeleteAsync(id);
+
+        }
+
     }
 }

@@ -23,7 +23,7 @@ namespace SistRent.API.Controllers
             await _RoomTypeService.AddAsync(request);
             return Ok(new
             {
-                msg = "User Created"
+                msg = "Room Created"
             });
         }
 
@@ -31,23 +31,23 @@ namespace SistRent.API.Controllers
         [Route("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            var users = await _RoomTypeService.GeTAsync();
-            return Ok(users);
+            var rooms = await _RoomTypeService.GeTAsync();
+            return Ok(rooms);
         }
 
         [HttpGet("{id:int}")]
         public async Task<IActionResult> Get(int id)
         {
-            var users = await _RoomTypeService.GetByIdAsync(id);
+            var rooms = await _RoomTypeService.GetByIdAsync(id);
 
-            if (users is null)
+            if (rooms is null)
             {
                 return NotFound(new
                 {
-                    message = "Usuario no encontrado"
+                    message = "Room no encontrado"
                 });
             }
-            return Ok(users);
+            return Ok(rooms);
         }
 
         [HttpPut]
@@ -55,7 +55,7 @@ namespace SistRent.API.Controllers
         public async Task<IActionResult> Update([FromBody] RoomTypeUpdateDto request)
         {
             await _RoomTypeService.UpdateAsync(request);
-            return Ok(new { msg = "user updated" });
+            return Ok(new { msg = "Room updated" });
         }
 
         [HttpDelete("{id:int}")]

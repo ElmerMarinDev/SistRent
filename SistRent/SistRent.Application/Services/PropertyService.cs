@@ -85,6 +85,23 @@ namespace SistRent.Application.Services
 
         }
 
+        public async Task<PropertyResponseDto> GetByIdAsync(int id)
+        {
+
+            if (id == 0) throw new ValidationException("User id is requeried");
+            var property = await _repo.GetByIdAsync(id);
+
+            return new PropertyResponseDto(
+                IdProperty: property.IdProperty,
+                Name: property.Name,
+                Address: property.Address,
+                Description: property.Description,
+                Status: property.Status,
+                RegistrationDate: property.CreatedAt
+            );
+
+        }
+
     }
 
 }

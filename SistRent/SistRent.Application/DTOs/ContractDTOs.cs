@@ -18,6 +18,7 @@ namespace SistRent.Application.DTOs
         );
 
     public record ContractUpdateDto(
+        int IdContract,
         int IdRoom,
         int IdContractStatus,
         DateTime StartDate,

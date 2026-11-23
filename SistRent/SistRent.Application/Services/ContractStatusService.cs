@@ -70,5 +70,21 @@ namespace SistRent.Application.Services
 
         }
 
+        public async Task<ContractStatusResponseDto> GetByIdAsync(int id)
+        {
+
+            if (id == 0) throw new ValidationException("User id is requeried");
+            var contractStatus = await _repo.GetByIdAsync(id);
+
+            return new ContractStatusResponseDto(
+                IdContractStatus:contractStatus.IdContractStatus,
+                Name:contractStatus.Name,
+                Description:contractStatus.Description
+
+                );
+
+
+        }
+
     }
 }

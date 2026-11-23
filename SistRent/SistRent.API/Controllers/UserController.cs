@@ -32,7 +32,7 @@ namespace SistRent.API.Controllers
         }
 
         [HttpGet]
-        [Route("GetAll")]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> GetAll()
         {
             var users=await _userService.GeTAsync();
@@ -63,6 +63,7 @@ namespace SistRent.API.Controllers
         }
 
         [HttpDelete("{id:int}")]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Delete(int id)
         {
             await _userService.DeleteAsync(id);

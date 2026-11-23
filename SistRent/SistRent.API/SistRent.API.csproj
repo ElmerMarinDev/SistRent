@@ -22,4 +22,9 @@
     <ProjectReference Include="..\SistRent.Infrastructure\SistRent.Infrastructure.csproj" />
   </ItemGroup>
 
+    <PropertyGroup>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<NoWard>$(NoWard);1591</NoWard>
+	</PropertyGroup>
+
 </Project>

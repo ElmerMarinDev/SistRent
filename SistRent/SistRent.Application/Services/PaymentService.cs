@@ -29,6 +29,27 @@ namespace SistRent.Application.Services
                 ));
         }
 
+        public async Task<PaymentResponseDto> GetByIdAsync(int id)
+        {
+
+            if (id == 0) throw new ValidationException("User id is requeried");
+            var payment = await _repo.GetByIdAsync(id);
+
+            return new PaymentResponseDto(
+                IdPayment:payment.IdPayment,
+                IdContract:payment.IdContract,
+                PaymentMethod: payment.PaymentMethod.Name,
+                PaymentDate:payment.PaymentDate,
+                PeriodStart:payment.PeriodStart,
+                PeriodEnd:payment.PeriodEnd,
+                Amount:payment.Amount,
+                LateFee:payment.LateFee,
+                TotalAmount:payment.TotalAmount,
+                Status:payment.Status,
+                CreatedAt:payment.CreatedAt
+                );
+        }
+
         public async Task AddAsync(PaymentCreateDto Payment)
         {
             var newPaymentMethod = new Payment
@@ -85,6 +106,13 @@ namespace SistRent.Application.Services
             if (existingPaymentMethod is null) throw new ValidationException("User not found");
 
             await _repo.EditAsync(existingPaymentMethod);
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            if (id == 0) throw new ValidationException("User id is requeried");
+            await _repo.DeleteAsync(id);
+
         }
     }
 }

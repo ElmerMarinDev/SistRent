@@ -64,5 +64,26 @@ namespace SistRent.Application.Services
 
             await _repo.EditAsync(existingPaymentMethod);
         }
+
+
+        public async Task<PaymentMethodResponseDto> GetByIdAsync(int id)
+        {
+
+            if (id == 0) throw new ValidationException("User id is requeried");
+            var payment = await _repo.GetByIdAsync(id);
+
+            return new PaymentMethodResponseDto(
+                IdPaymentMethod: payment.IdPaymentMethod,
+                Name: payment.Name,
+                Description: payment.Description
+                );
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            if (id == 0) throw new ValidationException("User id is requeried");
+            await _repo.DeleteAsync(id);
+
+        }
     }
 }
